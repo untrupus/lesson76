@@ -10,10 +10,9 @@ router.get('/', (req, res) => {
             if (err) {
                 console.error(err);
             }
-            let index = JSON.parse(data).map(e => {
-                return e.datetime;
-            }).indexOf(req.query.datetime);
-            res.send(JSON.parse(data).splice(0, JSON.parse(data).length - (index + 1)));
+            console.log(req.query.datetime );
+            const newMessages = JSON.parse(data).filter(message => `${message.datetime}` > `${req.query.datetime}`);
+            res.send(newMessages);
         });
     } else {
         fs.readFile(fileName, (err, data) => {
